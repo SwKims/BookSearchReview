@@ -13,7 +13,7 @@ import com.ksw.booksearchreview.model.Review
 @Dao
 interface ReviewDao {
 
-    @Query("SELECT * FROM review WHERE id == :id")
+    @Query("SELECT * FROM review WHERE id = :id")
     fun registerReview(id : Int): Review
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
