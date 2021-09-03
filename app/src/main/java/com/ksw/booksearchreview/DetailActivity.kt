@@ -13,12 +13,12 @@ import com.ksw.booksearchreview.model.Review
  * Created by KSW on 2021-09-03
  */
 
-class DetailActivity: AppCompatActivity() {
+class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
     private lateinit var database: AppDatabase
 
-    private var bookDetail: Book? = null
+    private var model: Book? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,31 +26,11 @@ class DetailActivity: AppCompatActivity() {
         setContentView(binding.root)
 
         database = getDatabase(this)
-        bookDetail = intent.getParcelableExtra("bookModel")
+        model = intent.getParcelableExtra("bookModel")
 
         detailView()
         saveButton()
 
-    }
-
-    private fun detailView() {
-
-        binding.titleTextView.text = bookDetail?.title.orEmpty()
-        binding.descriptionTextView.text = bookDetail?.description.orEmpty()
-
-        Glide.with(binding.coverImageView.context)
-            .load(bookDetail?.coverLargeUrl.orEmpty())
-            .into(binding.coverImageView)
-
-        // 저장되어있는 리뷰 불러오기
-        Thread {
-            val review = database.reviewDao().registerReview(bookDetail?.id?.toInt() ?: 0)
-            review?.let {
-                runOnUiThread {
-                    binding.reviewEditText.setText(it.review)
-                }
-            }
-        }
     }
 
     private fun saveButton() {
@@ -58,7 +38,7 @@ class DetailActivity: AppCompatActivity() {
             Thread {
                 database.reviewDao().saveReview(
                     Review(
-                        bookDetail?.id?.toInt() ?: 0,
+                        model?.id?.toInt() ?: 0,
                         binding.reviewEditText.text.toString()
                     )
                 )
@@ -66,6 +46,31 @@ class DetailActivity: AppCompatActivity() {
         }
     }
 
+    private fun detailView() {
+
+        binding.titleTextView.text = model?.title.orEmpty()
+        binding.descriptionTextView.text = model?.description.orEmpty()
+
+        Glide.with(binding.coverImageView.context)
+            .load(model?.coverLargeUrl.orEmpty())
+            .into(binding.coverImageView)
+
+        // 저장되어있는 리뷰 불러오기
+        Thread {
+            val review = database.reviewDao().getOneReview(model?.id?.toInt() ?: 0)
+            review?.let {
+                runOnUiThread {
+                    binding.reviewEditText.setText(it.review)
+                }
+            }
+        }
+        /*Thread {
+            val review = database.reviewDao().registerReview(bookDetail?.id?.toInt() ?: 0)
+            runOnUiThread {
+                binding.reviewEditText.setText(review?.review.orEmpty())
+            }
+        }*/
+    }
 
 
 }

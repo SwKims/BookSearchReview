@@ -38,10 +38,10 @@ class BookAdapter(private val itemClickListener: (Book) -> Unit) :
 
     // 만들어진 뷰 홀더가 없을 경우 생성하는 함수
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val view: View = layoutInflater.inflate(R.layout.item_books, parent, false)
+     /*   val layoutInflater = LayoutInflater.from(parent.context)
+        val view: View = layoutInflater.inflate(R.layout.item_books, parent, false)*/
         return BookHolder(
-            ItemBooksBinding.bind(view)
+            ItemBooksBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 

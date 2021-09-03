@@ -9,7 +9,6 @@
         android:id="@+id/ImageBook"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:background="@drawable/ic_search"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

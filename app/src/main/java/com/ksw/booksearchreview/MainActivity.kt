@@ -43,12 +43,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        startService()
-        bookServiceLoadBestSellers()
-
         initBookRecyclerView()
         initHistoryRecyclerView()
         initSearchEditText()
+
+        startService()
+        bookServiceLoadBestSellers()
     }
 
     private fun bookServiceLoadBestSellers() {
@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity() {
         binding.historyRecyclerView.isVisible = false
     }
 
-    private fun booksBestSeller(keyword: String) {
+    fun booksBestSeller(keyword: String) {
         bookServiceApi.getSearchBookName(API_KEY, keyword)
             .enqueue(object : Callback<SearchBook> {
                 override fun onResponse(call: Call<SearchBook>, response: Response<SearchBook>) {

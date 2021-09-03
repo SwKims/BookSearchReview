@@ -25,8 +25,9 @@ class HistoryAdapter(val historyDeleteClickListener: (String) -> Unit, val mainA
             binding.btHistoryDelete.setOnClickListener {
                 historyDeleteClickListener(historyModel.keyword.orEmpty())
             }
-            binding.root.setOnClickListener {
 
+            binding.root.setOnClickListener {
+                mainActivity.booksBestSeller(historyModel.keyword.toString())
             }
 
         }
